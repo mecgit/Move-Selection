@@ -41,6 +41,10 @@ MuseScore {
 	property var dur: 8  /// 4 for quarter note;  8 for eighth note; 16 for sixteenth note; etc...
 
     onRun: {
+		if (!curScore || !curScore.selection || !curScore.selection.elements || curScore.selection.elements.length === 0) {
+			return
+		}
+
 		var cursor = curScore.newCursor()				
 
 		cursor.rewind(2)

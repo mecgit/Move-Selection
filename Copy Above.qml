@@ -39,6 +39,10 @@ MuseScore {
     }
 
     onRun: {		
+		if (!curScore || !curScore.selection || !curScore.selection.elements || curScore.selection.elements.length === 0) {
+			return
+		}
+
 		var cursor = curScore.newCursor()
 		
 		cursor.rewind(2)

@@ -40,6 +40,10 @@ MuseScore {
 
 
     onRun: {
+		if (!curScore || !curScore.selection || !curScore.selection.elements || curScore.selection.elements.length === 0) {
+			return
+		}
+
 		var cursor = curScore.newCursor()
 
 		cursor.rewind(2)
@@ -54,7 +58,7 @@ MuseScore {
 		var startTrack = startStaff * 4;
 
 		var targetStaff = endStaff
-		while (targetStaff <= curScore.nstaves && curScore.staves[targetStaff].visible == false) { //// skip invisible staves
+		while (targetStaff < curScore.nstaves && curScore.staves[targetStaff].visible == false) { //// skip invisible staves
 			targetStaff ++
 		}
 		if (targetStaff >= curScore.nstaves) {

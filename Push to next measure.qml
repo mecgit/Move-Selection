@@ -108,6 +108,10 @@ MuseScore {
 	}		
 
 	onRun: {
+		if (!curScore || !curScore.selection || !curScore.selection.elements || curScore.selection.elements.length === 0) {
+		    return
+		}
+
         curScore.startCmd()
 		insertBar();
         curScore.endCmd()        
