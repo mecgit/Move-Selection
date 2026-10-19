@@ -2,7 +2,7 @@
 A collection of MuseScore 4.x plugins for moving a range selection left, right, up, or down; copy selection to stave above or below, or add an empty measure to selected staves without adding one for the whole system. Works with multiple voices and staff selections.
 
 ## Usage
- - Select a range of notes and run the corresponding plugin to move the selection left or right by an eighth note, or move to the staff above or below.
+ - Select a single note or a range of notes and run the corresponding plugin to move left or right by an eighth note, or move to the staff above or below.
  - You can also copy the selection to the staff above or below, or add an empty measure solely to the selected staves.
  - You can set the duration by which to move the selection "left" or "right" inside the code.
 

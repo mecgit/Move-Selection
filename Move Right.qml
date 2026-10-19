@@ -40,8 +40,49 @@ MuseScore {
 
 	property var dur: 8  /// 4 for quarter note;  8 for eighth note; 16 for sixteenth note; etc...
 
+	function moveSingleNote(note) {
+		var targetTick = note.tick + division * 4 / dur
+		var targetTrack = note.track
+		var cursor = curScore.newCursor()
+		cursor.track = targetTrack
+		cursor.rewindToTick(targetTick)
+		if (!cursor.element) {
+			return
+		}
+
+		curScore.startCmd("Move note right")
+		cmd("copy")
+		cmd("delete")
+
+		cursor = curScore.newCursor()
+		cursor.track = targetTrack
+		cursor.rewindToTick(targetTick)
+		if (cursor.tick > targetTick) {
+			cursor.prev()
+			var cr = cursor.element
+			if (cr) {
+				var overlap = cursor.tick + cr.actualDuration.ticks - targetTick
+				if (overlap > 0 && cursor.tick < targetTick) {
+					cr.duration = fractionFromTicks(cr.actualDuration.ticks - overlap)
+				}
+			}
+			cursor.rewindToTick(targetTick)
+		}
+		if (cursor.element && cursor.element.type == Element.CHORD) {
+			curScore.selection.select(cursor.element.notes[0])
+		} else if (cursor.element) {
+			curScore.selection.select(cursor.element)
+		}
+		cmd("paste")
+		curScore.endCmd()
+	}
+
     onRun: {
 		if (!curScore || !curScore.selection || !curScore.selection.elements || curScore.selection.elements.length === 0) {
+			return
+		}
+		if (curScore.selection.elements.length == 1 && curScore.selection.elements[0].type == Element.NOTE) {
+			moveSingleNote(curScore.selection.elements[0])
 			return
 		}
 
